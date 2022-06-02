@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widgets/reddit_header_widget.dart';
-import '../widgets/reddit_post_widget.dart';
+import '../../constants/constants_styles.dart';
+import 'bloc/connectivity_bloc.dart';
+import 'home_layout_success.dart';
 
 class HomeLayout extends StatelessWidget {
   const HomeLayout({
@@ -10,18 +12,19 @@ class HomeLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            RedditHeaderWidget(),
-            SizedBox(height: 10.0),
-            RedditPostWidget(),
-          ],
-        ),
-      ),
+    return BlocBuilder<ConnectivityBloc, ConnectivityState>(
+        builder: (context, state) {
+          return state.status.isOnline
+              ? const HomeLayoutSuccess()
+              : state.status.isOffline
+                ? const Center(
+                    child: Text(
+                      'You are offline',
+                      style: errorTextStyle,
+                    ),
+                  )
+              : const SizedBox();
+        }
     );
   }
 }
