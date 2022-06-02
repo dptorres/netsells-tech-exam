@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/reddit_header_widget.dart';
+import '../widgets/reddit_post_widget.dart';
+
 class HomeLayout extends StatelessWidget {
   const HomeLayout({
     Key? key,
@@ -7,9 +10,17 @@ class HomeLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Sample App',
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            RedditHeaderWidget(),
+            SizedBox(height: 10.0),
+            RedditPostWidget(),
+          ],
+        ),
       ),
     );
   }
